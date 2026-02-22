@@ -1,45 +1,40 @@
-function openAccount(start=0){
-    let current_Balance=startAmount;
-    let history=[];
-    function record(type,amount){
-        history.push({
-            type:type,
-            amount:amount,
-            balance_After:current_Balance,
-            date:new
-Date().toLocalString()
-        })
-    }
+function create_account(initial=0){
+    let balance=initial;
+    let history=[]
     return{
-        deposite: function(amount){
-            if (typeof amount!=="number" || amount<=0){
-                return "invalid amount"
+        deposit(amount){
+            if (amount<=0){
+                return("error")
             }
-            current_Balance+=amount;
-            record(amount)
-            return("amount added sucessfully")
+            balance += amount;
+            history.push(`deposited sucessfully ${amount}`)
+        
         },
-        withdraw:function(amount){
-            if (typeof amount !== "number" || amount<=0){
-                return("invalid")
+        withdraw(amount){
+            if(amount<=0){
+                return("error enter valid number")
             }
-            if (amount>current_Balance){
-                return("transction failed")
+            if(amount>balance){
+                return ("error invalid balance")
             }
-            current_Balance -= amount;
-            record(amount)
-            return('transcrition successfull')
+            balance -= amount
+            history.push(`withdraw ${amount}`)
         },
-        get_Balance: function(){
-            return(current_Balance)
-
+        getbalance(){
+            return balance;
+        },
+        gettransctionhistory(){
+            return history
         }
     }
- }
- 
-let myaccount=openAccount(3000)
-console.log(myaccount.deposite);
-console.log(myaccount.withdraw);
-console.log(myaccount.get_Balance);
+}
+
+const acccount = create_account(1000)
+console.log(acccount.deposit(2000));
+console.log(acccount.withdraw(200));
+console.log(acccount.getbalance());
+console.log(acccount.gettransctionhistory());
+
+
 
 
